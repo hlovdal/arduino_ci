@@ -1,4 +1,5 @@
 /.bundle/
+bundle_install/
 /.yardoc
 Gemfile.lock
 /_yardoc/
