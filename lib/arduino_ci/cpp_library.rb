@@ -283,7 +283,7 @@ module ArduinoCI
       unless ci_gcc_config.nil?
         cgc = ci_gcc_config
         ret = feature_args(cgc) + warning_args(cgc) + define_args(cgc) + flag_args(cgc) + ret
-        ret += [ "-DUNIT_TEST", "-g" ]
+        ret += [ "-DUNIT_TEST", "-g", "--coverage" ]
       end
       ret
     end
