@@ -24,7 +24,7 @@ typedef uint8_t byte;
 // Math and Trig
 #include "AvrMath.h"
 
-#include "AvrAdc.h"
+#include "AvrRegisters.h"
 #include "avr/interrupt.h"
 
 #include "Godmode.h"
