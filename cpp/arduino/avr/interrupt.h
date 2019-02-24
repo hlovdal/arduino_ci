@@ -6,7 +6,7 @@
 */
 #pragma once
 
-#include "../AvrRegisters.h"
+#include "arduino_ci/AvrRegisters.h"
 
 // Macros for disable/enable/return from interrupts
 #define cli()
