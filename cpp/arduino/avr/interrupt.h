@@ -6,6 +6,8 @@
 */
 #pragma once
 
+#include "../AvrRegisters.h"
+
 // Macros for disable/enable/return from interrupts
 #define cli()
 #define sei()
