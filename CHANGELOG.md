@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Support for `dtostrf()`
 - Added a CI workflow to lint the code base
 - Added a CI workflow to check for spelling errors
+- Added support for `ARDUINO_CI_UNIT_TEST_EXTRA_COMPILER_FLAGS` environment variable.
 
 ### Changed
 - We now compile a shared library to be used for each test.
