@@ -33,6 +33,7 @@ At a minimum, you will need the following lines in your file:
 ```yaml
 language: ruby
 script:
+   - bundle config set --local path 'vendor/bundle'
    - bundle install
    - bundle exec arduino_ci.rb
 ```

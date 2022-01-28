@@ -279,6 +279,7 @@ For most build environments, the only script that need be executed by the CI sys
 
 ```shell
 # simplest build script
+bundle config set --local path 'vendor/bundle'
 bundle install
 bundle exec arduino_ci.rb
 ```
@@ -293,6 +294,7 @@ If this is the behavior you need, `ensure_arduino_installation.rb` is for you.  
 
 ```shell
 # Example build script
+bundle config set --local path 'vendor/bundle'
 bundle install
 
 # ensure the Arduino installation -- creates the Library directory
