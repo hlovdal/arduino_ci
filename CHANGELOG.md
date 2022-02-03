@@ -30,6 +30,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Use `arduino-cli` version `0.29.0` as the backend
 - Test runner detects console width if possible, allowing variable width from 80-132 chars
 - Fix missing `LED_BUILTIN` definition for Arduino Due.
+- No longer ignore failures if the first step of compiling files for the
+  unit test fails.
 
 ### Deprecated
 
