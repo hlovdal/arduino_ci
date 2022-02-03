@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - `arduino_ci.rb --help` no longer crashes
+- No longer ignore failures if the first step of compiling files for the
+  unit test fails.
 
 ### Security
 
