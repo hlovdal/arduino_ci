@@ -8,6 +8,8 @@ VAR_CUSTOM_INIT_SCRIPT = "CUSTOM_INIT_SCRIPT".freeze
 VAR_USE_SUBDIR         = "USE_SUBDIR".freeze
 VAR_EXPECT_EXAMPLES    = "EXPECT_EXAMPLES".freeze
 VAR_EXPECT_UNITTESTS   = "EXPECT_UNITTESTS".freeze
+VAR_ARDUINO_CI_PRE_UNIT_TEST_RUN_SCRIPT  = "ARDUINO_CI_PRE_UNIT_TEST_RUN_SCRIPT".freeze
+VAR_ARDUINO_CI_POST_UNIT_TEST_RUN_SCRIPT = "ARDUINO_CI_POST_UNIT_TEST_RUN_SCRIPT".freeze
 
 CLI_SKIP_EXAMPLES_COMPILATION = "--skip-examples-compilation".freeze
 CLI_SKIP_UNITTESTS            = "--skip-unittests".freeze
@@ -73,6 +75,8 @@ class Parser
         show_help(opts)
         puts " - #{VAR_CUSTOM_INIT_SCRIPT}_SHELL - if set, this will override the"
         puts "       default shell (/bin/sh) used to execute #{VAR_CUSTOM_INIT_SCRIPT} with."
+        puts " - #{VAR_ARDUINO_CI_PRE_UNIT_TEST_RUN_SCRIPT} and/or #{VAR_ARDUINO_CI_POST_UNIT_TEST_RUN_SCRIPT}"
+        puts "       if set, run the script before/after each unit test run"
         exit
       end
     end
@@ -458,6 +462,7 @@ def perform_unit_tests(cpp_library, file_config)
   platforms.each do |p|
     @log.iputs
     compilers.each do |gcc_binary|
+      run_custom_script(VAR_ARDUINO_CI_PRE_UNIT_TEST_RUN_SCRIPT, p, gcc_binary)
       # before compiling the tests, build a shared library of everything except the test code
       next @log.failure_count += 1 unless build_shared_library(gcc_binary, p, config, cpp_library)
 
@@ -475,6 +480,7 @@ def perform_unit_tests(cpp_library, file_config)
           cpp_library.run_test_file(exe)
         end
       end
+      run_custom_script(VAR_ARDUINO_CI_POST_UNIT_TEST_RUN_SCRIPT, p, gcc_binary)
     end
   end
 end
