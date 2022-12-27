@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   by setting `CUSTOM_INIT_SCRIPT_SHELL` (defaults to `/bin/sh`).
 - Added support running scripts before and/or after each run of unit tests with
   `ARDUINO_CI_PRE_UNIT_TEST_RUN_SCRIPT` and `ARDUINO_CI_POST_UNIT_TEST_RUN_SCRIPT`.
+- Extraction of bytes usage in a compiled sketch is now calculated in a method: `ArduinoBackend.last_bytes_usage`
+- Added ```nano_every``` platform to represent ```arduino:megaavr``` architecture
+- Working directory is now printed in test runner output
+- Explicitly include `irb` via rubygems
 
 ### Changed
 - We now compile a shared library to be used for each test.
@@ -27,6 +31,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Update .gitattributes so we have consistent line endings
 - Change 266 files from CRLF to LF.
 - Run tests on push as well as on a pull request so developers can see impact
+- `ArduinoBackend` now exposes `config_file_path` instead of `config_dir` so that we can be explicit about [strange behavior in `arduino-cli` that isn't going to change anytime soon](https://github.com/arduino/arduino-cli/issues/753)
+- Use `arduino-cli` version `0.29.0` as the backend
+- Test runner detects console width if possible, allowing variable width from 80-132 chars
+- Fix missing `LED_BUILTIN` definition for Arduino Due, Zero and Circuit Playground.
+- No longer ignore failures if the first step of compiling files for the
+  unit test fails.
 
 ### Deprecated
 
@@ -39,6 +49,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Run Windows tests on Windows not Ubuntu
 - Properly report error in building shared library
 - A missing `examples` directory no longer causes a crash in `cpp_library.rb`
+- Referring to an undefined platform no longer causes a crash; it's now a helpful error message
+- A copy/paste error that prevented compiler warning flags from being supplied has been fixed, via jgfoster
+- RSpec was not communicating compile errors from unit test executables that failed to build. Now it does, via jgfoster
+- Windows paths now avoid picking up backslashes, for proper equality comparisons
+- Libraries are now considered installed if their entry is a symlink (for which `exist?` would return `false`)
 
 ### Security
 
@@ -145,7 +160,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.4.0] - 2020-11-21
 ### Added
 - `arduino_ci_remote.rb` CLI switch `--skip-examples-compilation`
-- Add support for `diditalPinToPort()`, `digitalPinToBitMask()`, `portOutputRegister()`, and `portInputRegister()`
+- Add support for `digitalPinToPort()`, `digitalPinToBitMask()`, `portOutputRegister()`, and `portInputRegister()`
 - `CppLibrary.header_files` to find header files
 - `LibraryProperties` to read metadata from Arduino libraries
 - `CppLibrary.library_properties_path`, `CppLibrary.library_properties?`, `CppLibrary.library_properties` to expose library properties of a Cpp library

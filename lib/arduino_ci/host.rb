@@ -17,13 +17,14 @@ module ArduinoCI
     # via https://stackoverflow.com/a/5471032/2063546
     #   which('ruby') #=> /usr/bin/ruby
     # @param cmd [String] the command to search for
-    # @return [String] the full path to the command if it exists
+    # @return [Pathname] the full path to the command if it exists
     def self.which(cmd)
       exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
-      ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
+      ENV['PATH'].split(File::PATH_SEPARATOR).each do |string_path|
+        path = OS.windows? ? windows_to_pathname(string_path) : Pathname.new(string_path)
         exts.each do |ext|
-          exe = File.join(path, "#{cmd}#{ext}")
-          return exe if File.executable?(exe) && !File.directory?(exe)
+          exe = path.join("#{cmd}#{ext}")
+          return exe if exe.executable? && !exe.directory?
         end
       end
       nil
@@ -32,6 +33,16 @@ module ArduinoCI
     def self.run_and_capture(*args, **kwargs)
       stdout, stderr, status = Open3.capture3(*args, **kwargs)
       { out: stdout, err: stderr, success: status.exitstatus.zero? }
+    end
+
+    def self.merge_capture_results(args)
+      result = { out: "", err: "", success: true }
+      args.each do |a|
+        result[:out] = result[:out] + a[:out]
+        result[:err] = result[:err] + a[:err]
+        result[:success] = a[:success] unless a[:success]
+      end
+      result
     end
 
     def self.run_and_output(*args, **kwargs)

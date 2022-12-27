@@ -54,7 +54,39 @@ RSpec.describe ArduinoCI::Host do
     it "can find things with which" do
       ruby_path = ArduinoCI::Host.which("ruby")
       expect(ruby_path).not_to be nil
-      expect(ruby_path.include? "ruby").to be true
+      expect(ruby_path.to_s.include? "ruby").to be true
+    end
+  end
+
+  context "path mangling" do
+    win_path = "D:\\a\\_temp\\d20221224-4508-11w7f4\\foo.yml"
+    posix_pathname = Pathname.new("D:/a/_temp/d20221224-4508-11w7f4/foo.yml")
+
+    it "converts windows paths to pathnames" do
+      expect(ArduinoCI::Host.pathname_to_windows(posix_pathname)).to eq(win_path)
+    end
+
+    it "converts pathnames to windows paths" do
+      expect(ArduinoCI::Host.windows_to_pathname(win_path)).to eq(posix_pathname)
+    end
+  end
+
+  context "merge_capture_results" do
+    it "merges results" do
+      a1 = { out: "one", err: "ONE", success: true }
+      a2 = { out: "two", err: "TWO", success: false }
+      a3 = { out: "three", err: "THREE", success: true }
+      res = ArduinoCI::Host.merge_capture_results([a1, a2, a3])
+      expect(res[:out]).to eq("onetwothree")
+      expect(res[:err]).to eq("ONETWOTHREE")
+      expect(res[:success]).to eq(false)
+    end
+
+    it "handles empty input" do
+      res = ArduinoCI::Host.merge_capture_results([])
+      expect(res[:out]).to eq("")
+      expect(res[:err]).to eq("")
+      expect(res[:success]).to eq(true)
     end
   end
 

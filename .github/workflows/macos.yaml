@@ -11,7 +11,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6
-      - name: Check style, functionality, and usage
+      - name: Check style
         run: |
           g++ -v
           bundle config set --local path 'vendor/bundle'
@@ -19,19 +19,19 @@ jobs:
           bundle exec rubocop --version
           bundle exec rubocop -D .
 
-  "rspec":
+  "rspec-macos":
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6
-      - name: Check style, functionality, and usage
+      - name: Check functionality
         run: |
           g++ -v
           bundle config set --local path 'vendor/bundle'
           bundle install
-          bundle exec rspec --backtrace
+          bundle exec rspec
 
   "TestSomething":
     runs-on: macos-latest
@@ -40,7 +40,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6
-      - name: TestSomething
+      - name: Check usage - TestSomething
         run: |
           g++ -v
           bundle config set --local path 'vendor/bundle'
@@ -57,7 +57,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6
-      - name: Test NetworkLib from scratch
+      - name: Check usage - Test NetworkLib from scratch
         run: |
           g++ -v
           cd SampleProjects/NetworkLib
@@ -74,5 +74,5 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6
-      - name: Test SharedLibrary should fail
+      - name: Check usage - Test SharedLibrary should fail
         run: ./SampleProjects/SharedLibrary/test.sh
