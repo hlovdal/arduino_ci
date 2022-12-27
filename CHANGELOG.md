@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Support for `dtostrf()`
 - Added a CI workflow to lint the code base
 - Added a CI workflow to check for spelling errors
+- Added support for `ARDUINO_CI_UNIT_TEST_EXTRA_COMPILER_FLAGS` environment variable.
+- Added support for overriding the shell used to execute `CUSTOM_INIT_SCRIPT`
+  by setting `CUSTOM_INIT_SCRIPT_SHELL` (defaults to `/bin/sh`).
+- Added support running scripts before and/or after each run of unit tests with
+  `ARDUINO_CI_PRE_UNIT_TEST_RUN_SCRIPT` and `ARDUINO_CI_POST_UNIT_TEST_RUN_SCRIPT`.
 
 ### Changed
 - We now compile a shared library to be used for each test.
