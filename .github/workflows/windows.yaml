@@ -14,6 +14,7 @@ jobs:
       - name: Check style, functionality, and usage
         run: |
           g++ -v
+          bundle config set --local path 'vendor/bundle'
           bundle install
           bundle exec rubocop --version
           bundle exec rubocop -D .
@@ -30,8 +31,10 @@ jobs:
       - name: TestSomething
         run: |
           g++ -v
+          bundle config set --local path 'vendor/bundle'
           bundle install
           cd SampleProjects/TestSomething
+          bundle config set --local path 'vendor/bundle'
           bundle install
           bundle exec arduino_ci.rb
 
@@ -46,6 +49,7 @@ jobs:
         run: |
           g++ -v
           cd SampleProjects/NetworkLib
+          bundle config set --local path 'vendor/bundle'
           bundle install
           bundle exec ensure_arduino_installation.rb
           bash -x ./scripts/install.sh

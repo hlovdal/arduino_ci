@@ -1,5 +1,5 @@
 /*
-bundle config --local path vendor/bundle
+bundle config set --local path 'vendor/bundle'
 bundle install
 bundle exec arduino_ci.rb --skip-examples-compilation
 */
