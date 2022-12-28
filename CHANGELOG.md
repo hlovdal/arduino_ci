@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 
 ### Fixed
+- `arduino_ci.rb --help` no longer crashes
 
 ### Security
 
